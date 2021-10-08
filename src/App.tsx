@@ -12,9 +12,9 @@ const OPEN_TDB_API_CATEGORY_URL = "https://opentdb.com/api_category.php";
 
 const appCategoriesNames = [GENERAL_KNOWLEDGE, ENTERTAINMENT_BOOKS, ENTERTAINMENT_FILM, ENTERTAINMENT_MUSIC];
 
-type TAppCategoriesNames = string[];
+type AppCategoriesNames = string[];
 
-const getAppCategories = (categories: QuizCategory[], appCategoriesNames: TAppCategoriesNames) => {
+const getAppCategories = (categories: QuizCategory[], appCategoriesNames: AppCategoriesNames) => {
   return categories.filter(({ name }) => appCategoriesNames.includes(name));
 };
 
