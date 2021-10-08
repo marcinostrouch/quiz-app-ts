@@ -1,15 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { QuizCategory } from "../types/global";
 
-type TPayload = QuizCategory[];
-
 type SliceState = QuizCategory[];
+type Payload = SliceState;
 
 export const quizCategoriesSlice = createSlice({
   name: "quizCategories",
   initialState: [] as SliceState,
   reducers: {
-    addQuizCategories: (state, { payload }: PayloadAction<TPayload>) => {
+    addQuizCategories: (state, { payload }: PayloadAction<Payload>) => {
       return [...state, ...payload];
     },
   },

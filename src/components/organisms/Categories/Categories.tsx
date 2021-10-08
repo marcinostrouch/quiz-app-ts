@@ -20,14 +20,17 @@ type Categories = {
 };
 
 export const Categories = ({ onSelect }: Categories) => {
-  const { quizCategories } = useSelector((state: RootState) => state);
+  const {
+    quizCategories,
+    selectedCategory: { id: selectedCategoryId },
+  } = useSelector((state: RootState) => state);
 
   return (
     <>
       <h1>Quiz Categories</h1>
       <CategoriesContainer>
         {quizCategories.map((category: QuizCategory, idx) => (
-          <CategoryCard {...{ category, onSelect, idx }} />
+          <CategoryCard {...{ category, idx, onSelect, selectedCategoryId }} />
         ))}
       </CategoriesContainer>
     </>

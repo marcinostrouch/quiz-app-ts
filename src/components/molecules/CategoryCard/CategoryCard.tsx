@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { QuizCategory } from "../../../types/global";
 
-const CategoryCardContainer = styled.div`
+const CategoryCardContainer = styled.div<{ isSelected: boolean }>`
   height: 150px;
   width: 200px;
-  background-color: black;
+  background-color: ${({ isSelected }) => (isSelected ? "#930000" : "black")};
   color: white;
   margin: 1rem;
   border-radius: 5px;
@@ -23,13 +23,14 @@ type CategoryCard = {
   category: QuizCategory;
   idx: number;
   onSelect: (category: QuizCategory) => void;
+  selectedCategoryId: number;
 };
 
-export const CategoryCard = ({ category, idx, onSelect }: CategoryCard) => {
-  const { name } = category;
+export const CategoryCard = ({ category, idx, onSelect, selectedCategoryId }: CategoryCard) => {
+  const { id, name } = category;
 
   return (
-    <CategoryCardContainer onClick={() => onSelect(category)}>
+    <CategoryCardContainer onClick={() => onSelect(category)} isSelected={id === selectedCategoryId}>
       <h2>{`${idx + 1}. ${name}`}</h2>
     </CategoryCardContainer>
   );
