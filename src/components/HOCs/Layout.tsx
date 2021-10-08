@@ -1,7 +1,11 @@
 import React from "react";
 import { Header } from "../molecules/Header/Header";
 
-export const Layout: React.FC = ({ children }) => (
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+export const Layout = ({ children }: LayoutProps) => (
   <>
     <Header />
     {children}

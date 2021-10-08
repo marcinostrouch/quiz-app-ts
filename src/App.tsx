@@ -1,15 +1,13 @@
 import React from "react";
-import { Layout } from "./components/HOCs/Layout";
-import { Home } from "./components/pages/Home/Home";
-import logo from "./logo.svg";
 import "./App.css";
+import { Routes } from "./routes/Routes";
+import { GlobalStyle } from "./styles/globalStyles";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <div className="App">
-      <Layout>
-        <Home />
-      </Layout>
+      <GlobalStyle />
+      <Routes />
     </div>
   );
 };
