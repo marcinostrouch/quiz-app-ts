@@ -2,12 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import sampleSize from "lodash-es/sampleSize";
+import { decode } from "html-entities";
 import { useGetCategoryQuestionsQuery } from "../../../api/api";
 import { RootState } from "../../../redux/store";
 import { QuestionCard } from "../../molecules/QuestionCard/QuestionCard";
 import { Answers } from "../../organisms/Answers/Answers";
 import { QUESTIONS_FROM_API_AMOUNT, QUIZ_QUESTIONS_TOTAL_NUM } from "../../../constants/constants";
 import { QuizQuestion } from "../../../types/global";
+import { Progress } from "../../organisms/Progress/Progress";
 
 const QuizContainer = styled.div`
   height: 80vh;
@@ -81,8 +83,9 @@ export const Quiz = () => {
   return (
     <QuizContainer>
       <h1>{categoryName}</h1>
-      <QuestionCard question={currentQuestion?.question} />
+      <QuestionCard question={decode(currentQuestion?.question)} />
       <Answers {...{ handleAnswerClick }} />
+      <Progress {...{ score }} />
     </QuizContainer>
   );
 };
