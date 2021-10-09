@@ -24,15 +24,13 @@ export const Home = () => {
     setIsDifficultySelected(true);
   }, []);
 
+  // TODO: Add UI elements for handling missing input
   const handleOnStartClick = useCallback(() => {
-    console.log({ isCategorySelected, isDifficultySelected });
     if (!isCategorySelected) {
-      // Add UI element
       console.log("Please select quiz category");
     }
 
     if (!isDifficultySelected) {
-      // Add UI element
       console.log("Please select difficulty level");
     }
 
