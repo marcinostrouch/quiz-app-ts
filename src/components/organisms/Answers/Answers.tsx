@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { AnswerCheckbox } from "../../molecules/AnswerCheckbox/AnswerCheckbox";
 import { STR_TRUE, STR_FALSE } from "../../../constants/constants";
@@ -22,15 +22,43 @@ const CheckboxesContainer = styled.div`
 `;
 
 type AnswersProps = {
+  correctAnswer: string;
   handleAnswerClick: HandleAnswerClick;
+  isNewQuestion: boolean;
 };
 
-export const Answers = ({ handleAnswerClick }: AnswersProps) => {
+export const Answers = ({ correctAnswer, handleAnswerClick, isNewQuestion }: AnswersProps) => {
+  const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+  const [colorForTrue, setColorForTrue] = useState("");
+  const [colorForFalse, setColorForFalse] = useState("");
+
+  useEffect(() => {
+    setIsAnswerChecked(false);
+    setColorForTrue("");
+    setColorForFalse("");
+  }, [isNewQuestion]);
+
+  useEffect(() => {
+    if (isAnswerChecked && correctAnswer === STR_TRUE) {
+      setColorForTrue("green");
+      setColorForFalse("red");
+    } else if (isAnswerChecked && correctAnswer === STR_FALSE) {
+      setColorForTrue("red");
+      setColorForFalse("green");
+    }
+  }, [isAnswerChecked]);
+
+  const handleChecked = useCallback((checkboxVal) => {
+    setIsAnswerChecked(true);
+    handleAnswerClick(checkboxVal);
+  }, []);
+
+  // TODO: replace the buttons with checkboxes
   return (
     <AnswersContainer>
       <CheckboxesContainer>
-        <AnswerCheckbox answerValue={STR_TRUE} {...{ handleAnswerClick }} />
-        <AnswerCheckbox answerValue={STR_FALSE} {...{ handleAnswerClick }} />
+        <AnswerCheckbox answerValue={STR_TRUE} {...{ handleChecked }} color={colorForTrue} />
+        <AnswerCheckbox answerValue={STR_FALSE} {...{ handleChecked }} color={colorForFalse} />
       </CheckboxesContainer>
     </AnswersContainer>
   );

@@ -16,7 +16,9 @@ type QuestionCardProps = {
   question: string | undefined;
 };
 
-// TODO: Add content loader
+// TODO:
+//  Add content loader
+//  Move Answer buttons/checkboxes in here
 export const QuestionCard = ({ question }: QuestionCardProps) => {
   console.log("question ===", question);
   return (

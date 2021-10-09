@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import sampleSize from "lodash-es/sampleSize";
@@ -7,9 +7,9 @@ import { useGetCategoryQuestionsQuery } from "../../../api/api";
 import { RootState } from "../../../redux/store";
 import { QuestionCard } from "../../molecules/QuestionCard/QuestionCard";
 import { Answers } from "../../organisms/Answers/Answers";
-import { QUESTIONS_FROM_API_AMOUNT, QUIZ_QUESTIONS_TOTAL_NUM } from "../../../constants/constants";
 import { QuizQuestion } from "../../../types/global";
 import { Progress } from "../../organisms/Progress/Progress";
+import { QUESTIONS_FROM_API_AMOUNT, QUIZ_QUESTIONS_TOTAL_NUM } from "../../../constants/constants";
 
 const QuizContainer = styled.div`
   height: 80vh;
@@ -23,13 +23,14 @@ const QuizContainer = styled.div`
 `;
 
 type QuizQuestions = QuizQuestion[] | null;
-type CurrentQuestion = QuizQuestion | null;
 
 // TODO: add content loader and error handling
 export const Quiz = () => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestions>(null);
-  const [currentQuestion, setCurrentQuestion] = useState<CurrentQuestion>(null);
+  const [correctAnswer, setCorrectAnswer] = useState("");
+  const [currentQuestionText, setCurrentQuestionText] = useState("");
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
+  const [isNewQuestion, setIsNewQuestion] = useState(false);
   const [score, setScore] = useState(0);
 
   const {
@@ -50,7 +51,11 @@ export const Quiz = () => {
 
   useEffect(() => {
     if (quizQuestions) {
-      setCurrentQuestion(quizQuestions[currentQuestionNum]);
+      setCurrentQuestionText(quizQuestions[currentQuestionNum]?.question);
+      setCorrectAnswer(quizQuestions[currentQuestionNum]?.correct_answer);
+
+      // Refresh Answers component
+      setIsNewQuestion(true);
     }
   }, [quizQuestions, currentQuestionNum]);
 
@@ -64,9 +69,8 @@ export const Quiz = () => {
 
   const handleAnswerClick = useCallback(
     (answer: string) => {
-      // process score
-      // const correctAnswer = currentQuestion?.correct_answer;
-      const { correct_answer: correctAnswer } = currentQuestion || {};
+      // Prepare Answers rerender
+      setIsNewQuestion(false);
 
       if (answer === correctAnswer) {
         setScore((prev) => prev + 1);
@@ -74,17 +78,17 @@ export const Quiz = () => {
 
       // set new current question
       if (currentQuestionNum < QUIZ_QUESTIONS_TOTAL_NUM) {
-        setCurrentQuestionNum((prev) => prev + 1);
+        setTimeout(() => setCurrentQuestionNum((prev) => prev + 1), 3000);
       }
     },
-    [currentQuestion]
+    [correctAnswer]
   );
 
   return (
     <QuizContainer>
       <h1>{categoryName}</h1>
-      <QuestionCard question={decode(currentQuestion?.question)} />
-      <Answers {...{ handleAnswerClick }} />
+      <QuestionCard question={decode(currentQuestionText)} />
+      <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
       <Progress {...{ score }} />
     </QuizContainer>
   );

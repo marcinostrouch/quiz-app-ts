@@ -17,5 +17,5 @@ type ProgressProps = {
 };
 
 export const Progress = ({ score }: ProgressProps) => {
-  return <ProgressContainer>{`${score} / ${QUIZ_QUESTIONS_TOTAL_NUM}`}</ProgressContainer>;
+  return <ProgressContainer>{`Score: ${score} / ${QUIZ_QUESTIONS_TOTAL_NUM}`}</ProgressContainer>;
 };
