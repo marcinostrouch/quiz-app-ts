@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route, BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Layout } from "../components/HOCs/Layout";
 import { Home } from "../components/pages/Home/Home";
 import { Quiz } from "../components/pages/Quiz/Quiz";

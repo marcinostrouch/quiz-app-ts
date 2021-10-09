@@ -15,11 +15,11 @@ const CategoriesContainer = styled.div`
   align-items: flex-start;
 `;
 
-type Categories = {
+type CategoriesProps = {
   onSelect: OnSelect;
 };
 
-export const Categories = ({ onSelect }: Categories) => {
+export const Categories = ({ onSelect }: CategoriesProps) => {
   const {
     quizCategories,
     selectedCategory: { id: selectedCategoryId },

@@ -19,14 +19,14 @@ const CategoryCardContainer = styled.div<{ isSelected: boolean }>`
   }
 `;
 
-type CategoryCard = {
+type CategoryCardProps = {
   category: QuizCategory;
   idx: number;
   onSelect: (category: QuizCategory) => void;
   selectedCategoryId: number;
 };
 
-export const CategoryCard = ({ category, idx, onSelect, selectedCategoryId }: CategoryCard) => {
+export const CategoryCard = ({ category, idx, onSelect, selectedCategoryId }: CategoryCardProps) => {
   const { id, name } = category;
 
   return (

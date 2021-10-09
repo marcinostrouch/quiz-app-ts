@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM } from "../../../constants/constants";
+import { setSelectedDifficulty } from "../../../redux/selectedDifficultySlice";
+import { useAppDispatch } from "../../../redux/store";
 
 const DropDownContainer = styled.div`
   width: 15.5em;
@@ -48,21 +50,23 @@ const ListItem = styled.li`
 
 const options = [DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD];
 
-type OnDifficultySelect = {
+type DifficultyLevelSelectProps = {
   onDifficultySelect: (option: string | null) => void;
 };
 
-export const DifficultyLevelSelect = ({ onDifficultySelect }: OnDifficultySelect) => {
+export const DifficultyLevelSelect = ({ onDifficultySelect }: DifficultyLevelSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
+  const dispatch = useAppDispatch();
+
   const handleToggle = () => setIsOpen(!isOpen);
 
-  const onOptionClicked = (value: string | null) => () => {
-    setSelectedOption(value);
+  const onOptionClicked = (option: string) => () => {
+    setSelectedOption(option);
     setIsOpen(false);
-    onDifficultySelect(value);
-    console.log("value ===", value);
+    onDifficultySelect(option);
+    dispatch(setSelectedDifficulty(option));
   };
 
   return (
