@@ -24,7 +24,10 @@ const QuizContainer = styled.div`
 
 type QuizQuestions = QuizQuestion[] | null;
 
-// TODO: add content loader and error handling
+// TODO:
+//  add content loader and error handling
+//  fix progress/score
+
 export const Quiz = () => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestions>(null);
   const [correctAnswer, setCorrectAnswer] = useState("");
@@ -81,7 +84,7 @@ export const Quiz = () => {
         setTimeout(() => setCurrentQuestionNum((prev) => prev + 1), 3000);
       }
     },
-    [correctAnswer]
+    [currentQuestionNum, correctAnswer]
   );
 
   return (

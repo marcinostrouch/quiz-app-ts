@@ -16,7 +16,6 @@ type AnswerCheckboxProps = {
 };
 
 export const AnswerCheckbox = ({ answerValue, handleChecked, color }: AnswerCheckboxProps) => {
-  console.log("color ===", color);
   return (
     <Checkbox onClick={() => handleChecked(answerValue)} {...{ color }}>
       {answerValue}

@@ -20,7 +20,6 @@ type QuestionCardProps = {
 //  Add content loader
 //  Move Answer buttons/checkboxes in here
 export const QuestionCard = ({ question }: QuestionCardProps) => {
-  console.log("question ===", question);
   return (
     <QuestionCardContainer>
       <QuestionParagraph>{question}</QuestionParagraph>

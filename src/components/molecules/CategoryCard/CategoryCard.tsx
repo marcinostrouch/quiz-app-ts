@@ -1,22 +1,41 @@
 import React from "react";
 import styled from "styled-components";
+import { breakpoints } from "../../../styles/breakpoints";
+import { colours } from "../../../styles/colours";
 import { QuizCategory } from "../../../types/global";
 
 const CategoryCardContainer = styled.div<{ isSelected: boolean }>`
+  display: flex;
+  //justify-content: center;
+  align-items: center;
   height: 150px;
-  width: 200px;
-  background-color: ${({ isSelected }) => (isSelected ? "#930000" : "black")};
+  width: 100%;
+  background-color: ${({ isSelected }) => (isSelected ? colours.redRoseWood : colours.blackRichFogra)};
   color: white;
+  font-size: 1.4rem;
   margin: 1rem;
   border-radius: 5px;
-  box-shadow: 0 0 5px white;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.38);
   transition: transform 50ms ease;
 
   :hover {
     cursor: pointer;
-    background-color: #930000;
+    background-color: ${colours.redBarnRed};
+    box-shadow: 0 0 6px rgb(255, 255, 255);
     transform: scale(1.05);
   }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: 300px;
+  }
+`;
+
+const CategoryName = styled.h2`
+  padding-left: 1.4rem;
 `;
 
 type CategoryCardProps = {
@@ -31,7 +50,7 @@ export const CategoryCard = ({ category, idx, onSelect, selectedCategoryId }: Ca
 
   return (
     <CategoryCardContainer onClick={() => onSelect(category)} isSelected={id === selectedCategoryId}>
-      <h2>{`${idx + 1}. ${name}`}</h2>
+      <CategoryName>{`${idx + 1}. ${name}`}</CategoryName>
     </CategoryCardContainer>
   );
 };
