@@ -5,9 +5,9 @@ import { STR_TRUE, STR_FALSE } from "../../../constants/constants";
 import { HandleAnswerClick } from "../../molecules/AnswerCheckbox/types";
 
 const AnswersContainer = styled.div`
+  margin-top: 1.6rem;
   height: 100px;
   width: 100%;
-  background-color: #3c3e47;
   display: flex;
   flex-direction: column;
   justify-content: center;

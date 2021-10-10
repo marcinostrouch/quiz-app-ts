@@ -6,20 +6,31 @@ import { setSelectedCategory } from "../../../redux/selectedCategorySlice";
 import { RootState, useAppDispatch } from "../../../redux/store";
 import { QuizCategory } from "../../../types/global";
 import { Categories } from "../../organisms/Categories/Categories";
+import { colours } from "../../../styles/colours";
+import { breakpoints } from "../../../styles/breakpoints";
 
 const HomeBottomContainer = styled.div`
-  margin-top: 144px;
+  margin: 34px 0;
   padding-right: 5vw;
   display: flex;
-  justify-content: right;
+  justify-content: center;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    margin-top: 144px;
+    justify-content: right;
+  }
 `;
 
 const StartButton = styled.button`
   width: 25%;
   height: 55px;
   background-color: transparent;
-  border: 1px solid #59632c;
+  border: 1px solid ${colours.greenDarkMoss};
   border-radius: 5px;
+
+  :hover {
+    background-color: ${colours.greenDarkMoss};
+  }
 `;
 
 export type OnSelect = (selectedCategory: QuizCategory) => void;
@@ -33,16 +44,16 @@ export const Home = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
 
-  const handleSelectCategory = useCallback<OnSelect>((selectedCategory: QuizCategory) => {
-    setIsCategorySelected(true);
-    dispatch(setSelectedCategory(selectedCategory));
-  }, []);
-
   useEffect(() => {
     if (selectedDifficulty) {
       setIsDifficultySelected(true);
     }
   }, [selectedDifficulty]);
+
+  const handleSelectCategory = useCallback<OnSelect>((selectedCategory: QuizCategory) => {
+    setIsCategorySelected(true);
+    dispatch(setSelectedCategory(selectedCategory));
+  }, []);
 
   // TODO: Add UI elements for handling missing input
   const handleOnStartClick = useCallback(() => {

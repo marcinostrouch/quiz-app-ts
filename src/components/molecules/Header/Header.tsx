@@ -33,6 +33,7 @@ const Logo = styled.div`
   }
 `;
 
+// TODO: Hide settings in Quiz view
 export const Header = () => {
   return (
     <HeaderContainer>

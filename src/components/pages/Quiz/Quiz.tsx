@@ -5,6 +5,7 @@ import sampleSize from "lodash-es/sampleSize";
 import { decode } from "html-entities";
 import { useGetCategoryQuestionsQuery } from "../../../api/api";
 import { RootState } from "../../../redux/store";
+import { breakpoints } from "../../../styles/breakpoints";
 import { QuestionCard } from "../../molecules/QuestionCard/QuestionCard";
 import { Answers } from "../../organisms/Answers/Answers";
 import { QuizQuestion } from "../../../types/global";
@@ -12,21 +13,30 @@ import { Progress } from "../../organisms/Progress/Progress";
 import { QUESTIONS_FROM_API_AMOUNT, QUIZ_QUESTIONS_TOTAL_NUM } from "../../../constants/constants";
 
 const QuizContainer = styled.div`
-  height: 80vh;
+  height: 90vh;
   margin: 0 auto;
-  //max-width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #383838;
 `;
+
+const CategoryName = styled.div`
+  font-size: 1.6rem;
+  margin-bottom: 2.1rem;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    font-size: 2.1rem;
+  }
+`;
+
+//------------------------------------------                                   -
 
 type QuizQuestions = QuizQuestion[] | null;
 
 // TODO:
 //  add content loader and error handling
-//  fix progress/score
+//  fix progress/score (perhaps: because currentQUestionNum jest nieaktualny ??????)
 
 export const Quiz = () => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestions>(null);
@@ -72,10 +82,12 @@ export const Quiz = () => {
 
   const handleAnswerClick = useCallback(
     (answer: string) => {
+      console.log("answer ===", answer);
       // Prepare Answers rerender
       setIsNewQuestion(false);
 
       if (answer === correctAnswer) {
+        console.log("correctAnswer ===", correctAnswer);
         setScore((prev) => prev + 1);
       }
 
@@ -89,10 +101,10 @@ export const Quiz = () => {
 
   return (
     <QuizContainer>
-      <h1>{categoryName}</h1>
+      <CategoryName>{categoryName}</CategoryName>
       <QuestionCard question={decode(currentQuestionText)} />
       <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
-      <Progress {...{ score }} />
+      <Progress {...{ currentQuestionNum }} />
     </QuizContainer>
   );
 };
