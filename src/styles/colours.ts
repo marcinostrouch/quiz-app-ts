@@ -10,4 +10,5 @@ export const colours = {
   redRoseWood: "#520000",
   white: "#fff",
   whiteCultured: "#F5F5F5",
+  yellowGamboge: "#e59500",
 };

@@ -17,3 +17,5 @@ export const QUESTIONS_FROM_API_AMOUNT = 20;
 export const QUIZ_QUESTIONS_TOTAL_NUM = 3;
 
 export const PATH_QUIZ = "/quiz";
+
+export const NEXT_QUESTION_SET_TIMEOUT_DELAY = 3000;

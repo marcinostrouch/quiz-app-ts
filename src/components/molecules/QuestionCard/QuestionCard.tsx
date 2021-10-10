@@ -7,7 +7,6 @@ const QuestionCardContainer = styled.div`
   height: 34vh;
   width: 90vw;
   background: ${colours.blackRichFograWithAlpha};
-  border-radius: 5px;
   margin-top: 1rem;
   padding: 1.6rem;
   overflow: scroll;

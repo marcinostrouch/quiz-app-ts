@@ -1,17 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { QUIZ_QUESTIONS_TOTAL_NUM } from "../../../constants/constants";
+import { breakpoints } from "../../../styles/breakpoints";
 import { colours } from "../../../styles/colours";
 
 const ProgressContainer = styled.div`
   display: flex;
   justify-content: right;
   align-items: center;
-  height: 100px;
-  //background-color: #2b2d32;
+  height: 2rem;
   color: ${colours.white};
+  font-size: 0.8rem;
 
-  width: 70vw;
+  width: 90vw;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: 70vw;
+    height: 3.4rem;
+  }
 `;
 
 type ProgressProps = {

@@ -6,11 +6,16 @@ import { decode } from "html-entities";
 import { useGetCategoryQuestionsQuery } from "../../../api/api";
 import { RootState } from "../../../redux/store";
 import { breakpoints } from "../../../styles/breakpoints";
+import { colours } from "../../../styles/colours";
 import { QuestionCard } from "../../molecules/QuestionCard/QuestionCard";
 import { Answers } from "../../organisms/Answers/Answers";
 import { QuizQuestion } from "../../../types/global";
 import { Progress } from "../../organisms/Progress/Progress";
-import { QUESTIONS_FROM_API_AMOUNT, QUIZ_QUESTIONS_TOTAL_NUM } from "../../../constants/constants";
+import {
+  NEXT_QUESTION_SET_TIMEOUT_DELAY,
+  QUESTIONS_FROM_API_AMOUNT,
+  QUIZ_QUESTIONS_TOTAL_NUM,
+} from "../../../constants/constants";
 
 const QuizContainer = styled.div`
   height: 90vh;
@@ -30,6 +35,26 @@ const CategoryName = styled.div`
   }
 `;
 
+const ProgressToNextQuestion = styled.div<{ isProgress: boolean; timeoutDuration: number }>`
+  width: 90vw;
+  height: 1px;
+  display: inline-block;
+  visibility: ${({ isProgress }) => (isProgress ? "visible" : "hidden")};
+  background-size: 200% 200%;
+  transition-property: background-position;
+  transition-duration: ${({ timeoutDuration }) => {
+    console.log("timeoutDuration ===", timeoutDuration);
+    return timeoutDuration + "ms";
+  }};
+
+  background-image: linear-gradient(to right, ${colours.yellowGamboge} 50%, ${colours.blackRichFograWithAlpha} 0);
+  background-position: ${({ isProgress }) => (isProgress ? "left" : "right")};
+
+  @media screen and (min-width: ${breakpoints.desktop}) {
+    width: 70vw;
+  }
+`;
+
 //------------------------------------------                                   -
 
 type QuizQuestions = QuizQuestion[] | null;
@@ -44,6 +69,7 @@ export const Quiz = () => {
   const [currentQuestionText, setCurrentQuestionText] = useState("");
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [isNewQuestion, setIsNewQuestion] = useState(false);
+  const [isProgressToNextQuestion, setIsProgressToNextQuestion] = useState(false);
   const [score, setScore] = useState(0);
 
   const {
@@ -63,16 +89,6 @@ export const Quiz = () => {
   });
 
   useEffect(() => {
-    if (quizQuestions) {
-      setCurrentQuestionText(quizQuestions[currentQuestionNum]?.question);
-      setCorrectAnswer(quizQuestions[currentQuestionNum]?.correct_answer);
-
-      // Refresh Answers component
-      setIsNewQuestion(true);
-    }
-  }, [quizQuestions, currentQuestionNum]);
-
-  useEffect(() => {
     if (categoryQuestions) {
       const randomSampleQuestions: QuizQuestions = sampleSize(categoryQuestions, QUIZ_QUESTIONS_TOTAL_NUM);
 
@@ -80,9 +96,20 @@ export const Quiz = () => {
     }
   }, [categoryQuestions]);
 
+  useEffect(() => {
+    if (quizQuestions) {
+      setCurrentQuestionText(quizQuestions[currentQuestionNum]?.question);
+      setCorrectAnswer(quizQuestions[currentQuestionNum]?.correct_answer);
+
+      // Refresh Answers component
+      setIsNewQuestion(true);
+      setIsProgressToNextQuestion(false);
+    }
+  }, [quizQuestions, currentQuestionNum]);
+
   const handleAnswerClick = useCallback(
     (answer: string) => {
-      console.log("answer ===", answer);
+      setIsProgressToNextQuestion(true);
       // Prepare Answers rerender
       setIsNewQuestion(false);
 
@@ -93,7 +120,7 @@ export const Quiz = () => {
 
       // set new current question
       if (currentQuestionNum < QUIZ_QUESTIONS_TOTAL_NUM) {
-        setTimeout(() => setCurrentQuestionNum((prev) => prev + 1), 3000);
+        setTimeout(() => setCurrentQuestionNum((prev) => prev + 1), NEXT_QUESTION_SET_TIMEOUT_DELAY);
       }
     },
     [currentQuestionNum, correctAnswer]
@@ -105,6 +132,7 @@ export const Quiz = () => {
       <QuestionCard question={decode(currentQuestionText)} />
       <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
       <Progress {...{ currentQuestionNum }} />
+      <ProgressToNextQuestion isProgress={isProgressToNextQuestion} timeoutDuration={NEXT_QUESTION_SET_TIMEOUT_DELAY} />
     </QuizContainer>
   );
 };
