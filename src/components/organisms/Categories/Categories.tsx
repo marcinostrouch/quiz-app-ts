@@ -23,7 +23,7 @@ const CategorySelectContainer = styled.div`
 
   @media screen and (min-width: ${breakpoints.desktop}) {
     h1 {
-      font-size: 3.4rem;
+      font-size: 2.1rem;
       margin: 3.4rem 0;
     }
   }

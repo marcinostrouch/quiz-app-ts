@@ -29,7 +29,7 @@ const SettingsSliderContainer = styled.div<{ isOpen: boolean }>`
 `;
 
 const OptionsLisItem = styled.li<{ isSelected: boolean }>`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: ${({ isSelected }) => (isSelected ? 700 : 400)};
   margin: 2rem 0;
   color: ${({ isSelected }) => (isSelected ? colours.redBright : colours.whiteCultured)};
@@ -41,7 +41,7 @@ const OptionsLisItem = styled.li<{ isSelected: boolean }>`
 
 const OptionsListLabel = styled.label`
   margin: 3rem 0 1rem 0;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   padding-bottom: 3rem;
   border-bottom: 1px solid ${colours.blueOxfordWithAlpha};
 `;

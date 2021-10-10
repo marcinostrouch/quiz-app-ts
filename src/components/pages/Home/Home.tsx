@@ -12,22 +12,26 @@ import { breakpoints } from "../../../styles/breakpoints";
 
 const HomeBottomContainer = styled.div`
   margin: 34px 0;
-  padding-right: 5vw;
   display: flex;
   justify-content: center;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     margin-top: 144px;
     justify-content: right;
+    padding-right: 5vw;
   }
 `;
 
 const StartButton = styled.button`
-  width: 25%;
+  width: 55%;
   height: 55px;
   background-color: transparent;
   border: 1px solid ${colours.greenDarkMoss};
   border-radius: 5px;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: 233px;
+  }
 
   :hover {
     background-color: ${colours.greenDarkMoss};

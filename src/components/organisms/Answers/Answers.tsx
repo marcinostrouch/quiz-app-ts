@@ -1,5 +1,6 @@
 import React, { MutableRefObject, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+import { colours } from "../../../styles/colours";
 import { AnswerCheckbox } from "../../molecules/AnswerCheckbox/AnswerCheckbox";
 import { STR_TRUE, STR_FALSE } from "../../../constants/constants";
 import { HandleAnswerClick } from "../../molecules/AnswerCheckbox/types";
@@ -40,10 +41,10 @@ export const Answers = ({ correctAnswer, handleAnswerClick, isNewQuestion }: Ans
 
   useEffect(() => {
     if (isAnswerChecked && correctAnswer === STR_TRUE) {
-      setColorForTrue("green");
+      setColorForTrue(colours.greenDarkMoss);
       setColorForFalse("red");
     } else if (isAnswerChecked && correctAnswer === STR_FALSE) {
-      setColorForTrue("red");
+      setColorForTrue(colours.redRufous);
       setColorForFalse("green");
     }
   }, [isAnswerChecked]);

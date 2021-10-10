@@ -4,6 +4,7 @@ export const colours = {
   blackRichFogra: "#0D1B2A",
   blackRichFograWithAlpha: "rgba(13,27,42,0.4)",
   greenDarkMoss: "#59632c",
+  greenDarkMossWithAlpha: "rgba(89,99,44,0.68)",
   redBright: "#FF0000FF",
   redRufous: "#A30000",
   redBarnRed: "#7A0000",
