@@ -56,7 +56,6 @@ export const Answers = ({ correctAnswer, handleAnswerClick, isNewQuestion }: Ans
   // TODO: rename all checkbox-related functions and variables -> buttons
   const handleChecked = useCallback(
     (checkboxVal) => {
-      console.log({ correctAnswer, checkboxVal });
       setIsAnswerChecked(true);
 
       if (checkboxVal === correctAnswer) {

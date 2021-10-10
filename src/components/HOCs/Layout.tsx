@@ -20,9 +20,9 @@ const ModalBackground = styled.div`
   opacity: 99%;
   background-color: #112038;
 
-  animation: fade 0.9s linear;
+  animation: slide-up-fade-in 0.9s linear;
 
-  @keyframes fade {
+  @keyframes slide-up-fade-in {
     0% {
       opacity: 0;
       top: 100vh;

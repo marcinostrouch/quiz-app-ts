@@ -30,7 +30,7 @@ const CategorySelectContainer = styled.div`
 `;
 
 const CategoryCardsContainer = styled.div`
-  //height: 30vh;
+  min-height: 34vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

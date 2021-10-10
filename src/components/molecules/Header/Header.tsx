@@ -28,10 +28,6 @@ const Logo = styled.div`
   @media screen and (min-width: ${breakpoints.tablet}) {
     font-size: 2.1rem;
   }
-
-  :hover {
-    color: ${colours.blueCapri};
-  }
 `;
 
 // TODO: Hide settings in Quiz view

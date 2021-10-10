@@ -28,12 +28,11 @@ const QuestionParagraph = styled.p`
 `;
 
 type QuestionCardProps = {
-  question: string | undefined;
+  question: string;
 };
 
 // TODO:
 //  Add content loader
-//  Move Answer buttons/checkboxes in here
 export const QuestionCard = ({ question }: QuestionCardProps) => {
   return (
     <QuestionCardContainer>
