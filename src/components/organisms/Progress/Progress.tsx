@@ -21,9 +21,11 @@ const ProgressContainer = styled.div`
 `;
 
 type ProgressProps = {
-  currentQuestionNum: number;
+  currentQuestionIdx: number;
 };
 
-export const Progress = ({ currentQuestionNum }: ProgressProps) => {
-  return <ProgressContainer>{`Question: ${currentQuestionNum + 1} / ${QUIZ_QUESTIONS_TOTAL_NUM}`}</ProgressContainer>;
+export const Progress = ({ currentQuestionIdx }: ProgressProps) => {
+  const questionNum = currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM ? currentQuestionIdx + 1 : currentQuestionIdx;
+
+  return <ProgressContainer>{`Question: ${questionNum} / ${QUIZ_QUESTIONS_TOTAL_NUM}`}</ProgressContainer>;
 };

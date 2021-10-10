@@ -42,11 +42,7 @@ const ProgressToNextQuestion = styled.div<{ isProgress: boolean; timeoutDuration
   visibility: ${({ isProgress }) => (isProgress ? "visible" : "hidden")};
   background-size: 200% 200%;
   transition-property: background-position;
-  transition-duration: ${({ timeoutDuration }) => {
-    console.log("timeoutDuration ===", timeoutDuration);
-    return timeoutDuration + "ms";
-  }};
-
+  transition-duration: ${({ timeoutDuration }) => timeoutDuration + "ms"};
   background-image: linear-gradient(to right, ${colours.yellowGamboge} 50%, ${colours.blackRichFograWithAlpha} 0);
   background-position: ${({ isProgress }) => (isProgress ? "left" : "right")};
 
@@ -67,10 +63,9 @@ export const Quiz = () => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestions>(null);
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [currentQuestionText, setCurrentQuestionText] = useState("");
-  const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
+  const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [isNewQuestion, setIsNewQuestion] = useState(false);
   const [isProgressToNextQuestion, setIsProgressToNextQuestion] = useState(false);
-  const [score, setScore] = useState(0);
 
   const {
     selectedCategory: { id: categoryId, name: categoryName },
@@ -97,33 +92,31 @@ export const Quiz = () => {
   }, [categoryQuestions]);
 
   useEffect(() => {
-    if (quizQuestions) {
-      setCurrentQuestionText(quizQuestions[currentQuestionNum]?.question);
-      setCorrectAnswer(quizQuestions[currentQuestionNum]?.correct_answer);
+    if (quizQuestions && currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM) {
+      setCurrentQuestionText(quizQuestions[currentQuestionIdx]?.question);
+      setCorrectAnswer(quizQuestions[currentQuestionIdx]?.correct_answer);
 
-      // Refresh Answers component
+      // Reset Answers component
       setIsNewQuestion(true);
       setIsProgressToNextQuestion(false);
     }
-  }, [quizQuestions, currentQuestionNum]);
+  }, [quizQuestions, currentQuestionIdx]);
 
   const handleAnswerClick = useCallback(
     (answer: string) => {
-      setIsProgressToNextQuestion(true);
+      if (currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM) {
+        setIsProgressToNextQuestion(true);
+      }
+
       // Prepare Answers rerender
       setIsNewQuestion(false);
 
-      if (answer === correctAnswer) {
-        console.log("correctAnswer ===", correctAnswer);
-        setScore((prev) => prev + 1);
-      }
-
-      // set new current question
-      if (currentQuestionNum < QUIZ_QUESTIONS_TOTAL_NUM) {
-        setTimeout(() => setCurrentQuestionNum((prev) => prev + 1), NEXT_QUESTION_SET_TIMEOUT_DELAY);
+      // set new currentQuestionIdx
+      if (currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM) {
+        setTimeout(() => setCurrentQuestionIdx((prev) => prev + 1), NEXT_QUESTION_SET_TIMEOUT_DELAY);
       }
     },
-    [currentQuestionNum, correctAnswer]
+    [currentQuestionIdx, correctAnswer]
   );
 
   return (
@@ -131,7 +124,7 @@ export const Quiz = () => {
       <CategoryName>{categoryName}</CategoryName>
       <QuestionCard question={decode(currentQuestionText)} />
       <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
-      <Progress {...{ currentQuestionNum }} />
+      <Progress {...{ currentQuestionIdx }} />
       <ProgressToNextQuestion isProgress={isProgressToNextQuestion} timeoutDuration={NEXT_QUESTION_SET_TIMEOUT_DELAY} />
     </QuizContainer>
   );

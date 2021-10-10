@@ -5,14 +5,16 @@ import { openTdbApi } from "../api/api";
 import quizCategoriesReducer from "./quizCategoriesSlice";
 import selectedCategoryReducer from "./selectedCategorySlice";
 import setSelectedDifficultyReducer from "./selectedDifficultySlice";
+import increaseScoreReducer from "./quizScoreSlice";
 
 const store = configureStore({
   reducer: {
-    quizCategories: quizCategoriesReducer,
-    selectedCategory: selectedCategoryReducer,
-    resetSelectedCategory: setSelectedDifficultyReducer,
-    selectedDifficulty: setSelectedDifficultyReducer,
     [openTdbApi.reducerPath]: openTdbApi.reducer,
+    quizCategories: quizCategoriesReducer,
+    quizScore: increaseScoreReducer,
+    resetSelectedCategory: setSelectedDifficultyReducer,
+    selectedCategory: selectedCategoryReducer,
+    selectedDifficulty: setSelectedDifficultyReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(openTdbApi.middleware),
 });
