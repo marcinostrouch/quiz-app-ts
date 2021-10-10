@@ -1,20 +1,25 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { setSelectedCategory } from "../../../redux/selectedCategorySlice";
-import { useAppDispatch } from "../../../redux/store";
+import { RootState, useAppDispatch } from "../../../redux/store";
 import { QuizCategory } from "../../../types/global";
 import { Categories } from "../../organisms/Categories/Categories";
 
 const HomeBottomContainer = styled.div`
   margin-top: 144px;
+  padding-right: 5vw;
   display: flex;
-  justify-content: center;
+  justify-content: right;
 `;
 
 const StartButton = styled.button`
   width: 25%;
+  height: 55px;
   background-color: transparent;
+  border: 1px solid #59632c;
+  border-radius: 5px;
 `;
 
 export type OnSelect = (selectedCategory: QuizCategory) => void;
@@ -22,6 +27,8 @@ export type OnSelect = (selectedCategory: QuizCategory) => void;
 export const Home = () => {
   const [isCategorySelected, setIsCategorySelected] = useState(false);
   const [isDifficultySelected, setIsDifficultySelected] = useState(false);
+
+  const { selectedDifficulty } = useSelector((state: RootState) => state);
 
   const history = useHistory();
   const dispatch = useAppDispatch();
@@ -31,9 +38,11 @@ export const Home = () => {
     dispatch(setSelectedCategory(selectedCategory));
   }, []);
 
-  const handleSelectDifficulty = useCallback(() => {
-    setIsDifficultySelected(true);
-  }, []);
+  useEffect(() => {
+    if (selectedDifficulty) {
+      setIsDifficultySelected(true);
+    }
+  }, [selectedDifficulty]);
 
   // TODO: Add UI elements for handling missing input
   const handleOnStartClick = useCallback(() => {
