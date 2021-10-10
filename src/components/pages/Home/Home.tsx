@@ -1,10 +1,21 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 import { setSelectedCategory } from "../../../redux/selectedCategorySlice";
 import { useAppDispatch } from "../../../redux/store";
 import { QuizCategory } from "../../../types/global";
 import { Categories } from "../../organisms/Categories/Categories";
-import { DifficultyLevelSelect } from "../../organisms/DifficultyLevelSelect/DifficultyLevelSelect";
+
+const HomeBottomContainer = styled.div`
+  margin-top: 144px;
+  display: flex;
+  justify-content: center;
+`;
+
+const StartButton = styled.button`
+  width: 25%;
+  background-color: transparent;
+`;
 
 export type OnSelect = (selectedCategory: QuizCategory) => void;
 
@@ -42,8 +53,9 @@ export const Home = () => {
   return (
     <>
       <Categories onSelect={handleSelectCategory} />
-      <DifficultyLevelSelect onDifficultySelect={handleSelectDifficulty} />
-      <button onClick={handleOnStartClick}>Start Quiz</button>
+      <HomeBottomContainer>
+        <StartButton onClick={handleOnStartClick}>Start Quiz</StartButton>
+      </HomeBottomContainer>
     </>
   );
 };

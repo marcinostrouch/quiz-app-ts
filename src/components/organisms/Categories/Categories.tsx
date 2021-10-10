@@ -9,7 +9,6 @@ import { OnSelect } from "../../pages/Home/Home";
 
 const CategorySelectContainer = styled.div`
   margin: 2rem 0;
-  height: 40vh;
 
   h1 {
     font-size: 1.4rem;
@@ -23,19 +22,23 @@ const CategorySelectContainer = styled.div`
   }
 
   @media screen and (min-width: ${breakpoints.desktop}) {
-    //margin: 3.4rem;
     h1 {
       font-size: 3.4rem;
+      margin: 3.4rem 0;
     }
   }
 `;
 
 const CategoryCardsContainer = styled.div`
-  height: 30vh;
+  //height: 30vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    justify-content: center;
+  }
 `;
 
 type CategoriesProps = {

@@ -4,6 +4,10 @@ import { DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM } from "../../../co
 import { setSelectedDifficulty } from "../../../redux/selectedDifficultySlice";
 import { useAppDispatch } from "../../../redux/store";
 
+const DifficultyLevelSelectContainer = styled.div`
+  width: 25%;
+`;
+
 const DropDownContainer = styled.div`
   width: 15.5em;
   margin: 0 auto;
@@ -70,7 +74,7 @@ export const DifficultyLevelSelect = ({ onDifficultySelect }: DifficultyLevelSel
   };
 
   return (
-    <>
+    <DifficultyLevelSelectContainer>
       <h2>Difficulty level:</h2>
       <DropDownContainer>
         <DropDownHeader onClick={handleToggle}>{selectedOption || "---Select difficulty level---"}</DropDownHeader>
@@ -86,6 +90,6 @@ export const DifficultyLevelSelect = ({ onDifficultySelect }: DifficultyLevelSel
           </DropDownListContainer>
         )}
       </DropDownContainer>
-    </>
+    </DifficultyLevelSelectContainer>
   );
 };
