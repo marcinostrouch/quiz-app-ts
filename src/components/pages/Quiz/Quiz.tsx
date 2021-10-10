@@ -1,10 +1,12 @@
 import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import sampleSize from "lodash-es/sampleSize";
 import { decode } from "html-entities";
 import { useGetCategoryQuestionsQuery } from "../../../api/api";
 import { RootState } from "../../../redux/store";
+import Modal, { ModalProvider } from "styled-react-modal";
 import { breakpoints } from "../../../styles/breakpoints";
 import { colours } from "../../../styles/colours";
 import { QuestionCard } from "../../molecules/QuestionCard/QuestionCard";
@@ -42,7 +44,7 @@ const ProgressToNextQuestion = styled.div<{ isProgress: boolean; timeoutDuration
   visibility: ${({ isProgress }) => (isProgress ? "visible" : "hidden")};
   background-size: 200% 200%;
   transition-property: background-position;
-  transition-duration: ${({ timeoutDuration }) => timeoutDuration + "ms"};
+  transition-duration: ${({ isProgress, timeoutDuration }) => (isProgress ? timeoutDuration + "ms" : 0)};
   background-image: linear-gradient(to right, ${colours.yellowGamboge} 50%, ${colours.blackRichFograWithAlpha} 0);
   background-position: ${({ isProgress }) => (isProgress ? "left" : "right")};
 
@@ -51,6 +53,29 @@ const ProgressToNextQuestion = styled.div<{ isProgress: boolean; timeoutDuration
   }
 `;
 
+//-----------------------------------------
+const StyledModal = Modal.styled`
+  width: 80vw;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${colours.redRoseWood};
+  
+  
+  p {
+  margin: 1.6rem 0;
+`;
+
+const ModalButton = styled.button`
+  width: 34vw;
+  height: 3.4rem;
+  background-color: transparent;
+  border: 1px solid ${colours.orangeFulvous};
+  margin: 3rem;
+  color: ${colours.orangeFulvous};
+`;
 //------------------------------------------                                   -
 
 type QuizQuestions = QuizQuestion[] | null;
@@ -66,10 +91,12 @@ export const Quiz = () => {
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [isNewQuestion, setIsNewQuestion] = useState(false);
   const [isProgressToNextQuestion, setIsProgressToNextQuestion] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     selectedCategory: { id: categoryId, name: categoryName },
     selectedDifficulty,
+    quizScore,
   } = useSelector((state: RootState) => state);
 
   // TODO: handle isLoading and error
@@ -82,6 +109,8 @@ export const Quiz = () => {
     categoryId,
     difficulty: selectedDifficulty.toLowerCase(),
   });
+
+  const history = useHistory();
 
   useEffect(() => {
     if (categoryQuestions) {
@@ -102,6 +131,12 @@ export const Quiz = () => {
     }
   }, [quizQuestions, currentQuestionIdx]);
 
+  useEffect(() => {
+    if (currentQuestionIdx === QUIZ_QUESTIONS_TOTAL_NUM - 1) {
+      setTimeout(() => setIsModalOpen(true), NEXT_QUESTION_SET_TIMEOUT_DELAY);
+    }
+  }, [currentQuestionIdx]);
+
   const handleAnswerClick = useCallback(
     (answer: string) => {
       if (currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM) {
@@ -119,6 +154,10 @@ export const Quiz = () => {
     [currentQuestionIdx, correctAnswer]
   );
 
+  const handleModalButtonClick = useCallback(() => {
+    history.push("/");
+  }, []);
+
   return (
     <QuizContainer>
       <CategoryName>{categoryName}</CategoryName>
@@ -126,6 +165,13 @@ export const Quiz = () => {
       <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
       <Progress {...{ currentQuestionIdx }} />
       <ProgressToNextQuestion isProgress={isProgressToNextQuestion} timeoutDuration={NEXT_QUESTION_SET_TIMEOUT_DELAY} />
+      <StyledModal isOpen={isModalOpen}>
+        <h1>Well done!</h1>
+        <p>
+          Your score is: {quizScore} / {QUIZ_QUESTIONS_TOTAL_NUM}
+        </p>
+        <ModalButton onClick={handleModalButtonClick}>Start Over</ModalButton>
+      </StyledModal>
     </QuizContainer>
   );
 };
