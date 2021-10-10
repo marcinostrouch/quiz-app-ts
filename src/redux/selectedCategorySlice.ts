@@ -9,8 +9,9 @@ export const selectedCategorySlice = createSlice({
   initialState: {} as SliceState,
   reducers: {
     setSelectedCategory: (state, { payload }: PayloadAction<Payload>) => ({ ...state, ...payload }),
+    resetSelectedCategory: (state, { payload }: PayloadAction<Payload>) => payload,
   },
 });
 
-export const { setSelectedCategory } = selectedCategorySlice.actions;
+export const { setSelectedCategory, resetSelectedCategory } = selectedCategorySlice.actions;
 export default selectedCategorySlice.reducer;

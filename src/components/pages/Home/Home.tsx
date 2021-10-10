@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { setSelectedCategory } from "../../../redux/selectedCategorySlice";
+import { PATH_QUIZ } from "../../../constants/constants";
+import { resetSelectedCategory, setSelectedCategory } from "../../../redux/selectedCategorySlice";
 import { RootState, useAppDispatch } from "../../../redux/store";
 import { QuizCategory } from "../../../types/global";
 import { Categories } from "../../organisms/Categories/Categories";
@@ -30,6 +31,15 @@ const StartButton = styled.button`
 
   :hover {
     background-color: ${colours.greenDarkMoss};
+    cursor: pointer;
+  }
+
+  :disabled {
+    cursor: not-allowed;
+  }
+
+  :hover:disabled::before {
+    content: "Select category to ";
   }
 `;
 
@@ -45,6 +55,10 @@ export const Home = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(resetSelectedCategory({} as QuizCategory));
+  }, []);
+
+  useEffect(() => {
     if (selectedDifficulty) {
       setIsDifficultySelected(true);
     }
@@ -55,18 +69,9 @@ export const Home = () => {
     dispatch(setSelectedCategory(selectedCategory));
   }, []);
 
-  // TODO: Add UI elements for handling missing input
   const handleOnStartClick = useCallback(() => {
-    if (!isCategorySelected) {
-      console.log("Please select quiz category");
-    }
-
-    if (!isDifficultySelected) {
-      console.log("Please select difficulty level");
-    }
-
-    if (isCategorySelected && isDifficultySelected) {
-      history.push("/quiz");
+    if (isCategorySelected) {
+      history.push(PATH_QUIZ);
     }
   }, [isCategorySelected, isDifficultySelected]);
 
@@ -74,7 +79,9 @@ export const Home = () => {
     <>
       <Categories onSelect={handleSelectCategory} />
       <HomeBottomContainer>
-        <StartButton onClick={handleOnStartClick}>Start Quiz</StartButton>
+        <StartButton disabled={!isCategorySelected} onClick={handleOnStartClick}>
+          Start Quiz
+        </StartButton>
       </HomeBottomContainer>
     </>
   );

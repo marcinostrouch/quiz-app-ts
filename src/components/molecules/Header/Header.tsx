@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { PATH_QUIZ } from "../../../constants/constants";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { colours } from "../../../styles/colours";
 import { breakpoints } from "../../../styles/breakpoints";
@@ -35,12 +36,24 @@ const Logo = styled.div`
 
 // TODO: Hide settings in Quiz view
 export const Header = () => {
+  const [isQuizOn, setIsQuizOn] = useState(false);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname.includes(PATH_QUIZ)) {
+      setIsQuizOn(true);
+    } else {
+      setIsQuizOn(false);
+    }
+  }, [pathname]);
+
   return (
     <HeaderContainer>
       <NavLink to="/" style={{ textDecoration: "none" }}>
         <Logo>Quiz Mania</Logo>
       </NavLink>
-      <Settings />
+      {!isQuizOn && <Settings />}
     </HeaderContainer>
   );
 };
