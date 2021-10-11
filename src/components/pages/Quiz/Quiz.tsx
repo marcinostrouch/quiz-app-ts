@@ -82,10 +82,6 @@ const ModalButton = styled.button`
 
 type QuizQuestions = QuizQuestion[] | null;
 
-// TODO:
-//  add content loader and error handling
-//  fix progress/score (perhaps: because currentQUestionNum jest nieaktualny ??????)
-
 export const Quiz = () => {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestions>(null);
   const [correctAnswer, setCorrectAnswer] = useState("");

@@ -40,8 +40,6 @@ type QuestionCardProps = {
   isLoading: boolean;
 };
 
-// TODO:
-//  Add content loader
 export const QuestionCard = ({ question, isLoading }: QuestionCardProps) => {
   return (
     <QuestionCardContainer>

@@ -12,7 +12,6 @@ const store = configureStore({
     [openTdbApi.reducerPath]: openTdbApi.reducer,
     quizCategories: quizCategoriesReducer,
     quizScore: increaseScoreReducer,
-    resetSelectedCategory: setSelectedDifficultyReducer,
     selectedCategory: selectedCategoryReducer,
     selectedDifficulty: setSelectedDifficultyReducer,
   },
