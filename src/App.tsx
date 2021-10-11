@@ -14,7 +14,7 @@ const appCategoriesNames = [GENERAL_KNOWLEDGE, ENTERTAINMENT_BOOKS, ENTERTAINMEN
 
 type AppCategoriesNames = string[];
 
-const getAppCategories = (categories: QuizCategory[], appCategoriesNames: AppCategoriesNames) => {
+const getQuizCategories = (categories: QuizCategory[], appCategoriesNames: AppCategoriesNames) => {
   return categories.filter(({ name }) => appCategoriesNames.includes(name));
 };
 
@@ -22,15 +22,19 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const {
-        data: { trivia_categories: triviaCategories },
-      } = await axios.get(OPEN_TDB_API_CATEGORY_URL);
+    try {
+      const fetchCategories = async () => {
+        const {
+          data: { trivia_categories: triviaCategories },
+        } = await axios.get(OPEN_TDB_API_CATEGORY_URL);
 
-      dispatch(addQuizCategories(getAppCategories(triviaCategories, appCategoriesNames)));
-    };
+        dispatch(addQuizCategories(getQuizCategories(triviaCategories, appCategoriesNames)));
+      };
 
-    fetchCategories();
+      fetchCategories();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (

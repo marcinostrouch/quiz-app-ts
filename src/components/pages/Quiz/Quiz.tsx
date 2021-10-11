@@ -158,10 +158,11 @@ export const Quiz = () => {
     history.push("/");
   }, []);
 
+  // TODO: refactor modal - separate component
   return (
     <QuizContainer>
       <CategoryName>{categoryName}</CategoryName>
-      <QuestionCard question={decode(currentQuestionText)} />
+      <QuestionCard question={decode(currentQuestionText)} {...{ isLoading }} />
       <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
       <Progress {...{ currentQuestionIdx }} />
       <ProgressToNextQuestion isProgress={isProgressToNextQuestion} timeoutDuration={NEXT_QUESTION_SET_TIMEOUT_DELAY} />

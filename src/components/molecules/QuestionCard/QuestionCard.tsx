@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PulseLoader from "react-spinners/PulseLoader";
 import { breakpoints } from "../../../styles/breakpoints";
 import { colours } from "../../../styles/colours";
 
@@ -27,16 +28,29 @@ const QuestionParagraph = styled.p`
   }
 `;
 
+const PulseLoaderContainer = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 type QuestionCardProps = {
   question: string;
+  isLoading: boolean;
 };
 
 // TODO:
 //  Add content loader
-export const QuestionCard = ({ question }: QuestionCardProps) => {
+export const QuestionCard = ({ question, isLoading }: QuestionCardProps) => {
+  const textRendered =
+    question || (!question && !isLoading && "Apologies, there seem to be no questions in this" + " category...");
   return (
     <QuestionCardContainer>
-      <QuestionParagraph>{question}</QuestionParagraph>
+      <QuestionParagraph>{textRendered}</QuestionParagraph>
+      <PulseLoaderContainer>
+        <PulseLoader loading={isLoading} size={13} color={colours.blueDarkCornflower} />
+      </PulseLoaderContainer>
     </QuestionCardContainer>
   );
 };

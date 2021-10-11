@@ -26,15 +26,15 @@ export const Settings = () => {
   // useOnClickOutside({ ref: node, handler: () => setIsOpen(false) });
   useOnClickOutside(node, () => setIsOpen(false));
 
-  const handleOnSettingsClick = useCallback(() => setIsOpen((prev) => !prev), []);
+  const handleOnClick = useCallback(() => setIsOpen((prev) => !prev), []);
 
   return (
     // TODO:
     //  -add conditional close settings menu icon
 
     <div ref={node}>
-      <SettingsIcon src={settingsIcon} onClick={handleOnSettingsClick} />
-      <SettingsSlideInMenu {...{ isOpen }} />
+      <SettingsIcon src={settingsIcon} onClick={handleOnClick} />
+      <SettingsSlideInMenu {...{ isOpen }} closeSettingsMenu={handleOnClick} />
     </div>
   );
 };

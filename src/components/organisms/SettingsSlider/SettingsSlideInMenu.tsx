@@ -50,15 +50,17 @@ const options = [DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD];
 
 type SettingsSlideInMenuProps = {
   isOpen: boolean;
+  closeSettingsMenu: () => void;
 };
 
-export const SettingsSlideInMenu = ({ isOpen }: SettingsSlideInMenuProps) => {
+export const SettingsSlideInMenu = ({ isOpen, closeSettingsMenu }: SettingsSlideInMenuProps) => {
   const { selectedDifficulty } = useSelector((state: RootState) => state);
 
   const dispatch = useAppDispatch();
 
   const handleOptionClick = useCallback((option) => {
     dispatch(setSelectedDifficulty(option));
+    closeSettingsMenu();
   }, []);
 
   return (
