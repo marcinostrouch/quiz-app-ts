@@ -12,6 +12,9 @@ This app allows users to do quizes pulled from a [Open Trivia Database API](http
 #### Quiz question view (mobile)
 ![](src/assets/readmeImages/qm-mobile-question.png)
 
+#### Score modal (desktop)
+![](src/assets/readmeImages/qm-desktop-score-modal.png)
+
 ## Tooling: 
 * React
 * TypeScript
