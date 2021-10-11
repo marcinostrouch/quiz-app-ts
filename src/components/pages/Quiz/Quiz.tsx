@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
+import React, { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -14,7 +14,9 @@ import { Answers } from "../../organisms/Answers/Answers";
 import { QuizQuestion } from "../../../types/global";
 import { Progress } from "../../organisms/Progress/Progress";
 import {
+  MISSING_QUESTION_FALLBACK_MESSAGE,
   NEXT_QUESTION_SET_TIMEOUT_DELAY,
+  PATH_HOME,
   QUESTIONS_FROM_API_AMOUNT,
   QUIZ_QUESTIONS_TOTAL_NUM,
 } from "../../../constants/constants";
@@ -122,12 +124,30 @@ export const Quiz = () => {
 
   useEffect(() => {
     if (quizQuestions && currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM) {
-      setCurrentQuestionText(quizQuestions[currentQuestionIdx]?.question);
+      const getQuestionText = (questions: QuizQuestions, currentQuestionIdx: number) => {
+        const { question = "" } = quizQuestions[currentQuestionIdx] || {};
+
+        if (!question && !isLoading) {
+          setTimeout(() => {
+            history.push(PATH_HOME);
+          }, NEXT_QUESTION_SET_TIMEOUT_DELAY);
+
+          return MISSING_QUESTION_FALLBACK_MESSAGE;
+        }
+
+        return decode(question);
+      };
+
+      const question = getQuestionText(quizQuestions, currentQuestionIdx);
+
+      setCurrentQuestionText(question);
+
       setCorrectAnswer(quizQuestions[currentQuestionIdx]?.correct_answer);
+
+      setIsProgressToNextQuestion(false);
 
       // Reset Answers component
       setIsNewQuestion(true);
-      setIsProgressToNextQuestion(false);
     }
   }, [quizQuestions, currentQuestionIdx]);
 
@@ -146,7 +166,6 @@ export const Quiz = () => {
       // Prepare Answers rerender
       setIsNewQuestion(false);
 
-      // set new currentQuestionIdx
       if (currentQuestionIdx < QUIZ_QUESTIONS_TOTAL_NUM) {
         setTimeout(() => setCurrentQuestionIdx((prev) => prev + 1), NEXT_QUESTION_SET_TIMEOUT_DELAY);
       }
@@ -155,7 +174,7 @@ export const Quiz = () => {
   );
 
   const handleModalButtonClick = useCallback(() => {
-    history.push("/");
+    history.push(PATH_HOME);
   }, []);
 
   // TODO: refactor modal - separate component
@@ -166,6 +185,7 @@ export const Quiz = () => {
       <Answers {...{ handleAnswerClick, correctAnswer, isNewQuestion }} />
       <Progress {...{ currentQuestionIdx }} />
       <ProgressToNextQuestion isProgress={isProgressToNextQuestion} timeoutDuration={NEXT_QUESTION_SET_TIMEOUT_DELAY} />
+
       <StyledModal isOpen={isModalOpen}>
         <h1>Well done!</h1>
         <p>

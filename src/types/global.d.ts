@@ -9,3 +9,5 @@ export type QuizQuestion = {
   difficulty: string;
   question: string;
 };
+
+export type QuizQuestions = QuizQuestion[] | null;

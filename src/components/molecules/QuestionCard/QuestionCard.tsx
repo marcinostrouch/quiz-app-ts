@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import PulseLoader from "react-spinners/PulseLoader";
 import { breakpoints } from "../../../styles/breakpoints";
@@ -43,11 +43,9 @@ type QuestionCardProps = {
 // TODO:
 //  Add content loader
 export const QuestionCard = ({ question, isLoading }: QuestionCardProps) => {
-  const textRendered =
-    question || (!question && !isLoading && "Apologies, there seem to be no questions in this" + " category...");
   return (
     <QuestionCardContainer>
-      <QuestionParagraph>{textRendered}</QuestionParagraph>
+      <QuestionParagraph>{question}</QuestionParagraph>
       <PulseLoaderContainer>
         <PulseLoader loading={isLoading} size={13} color={colours.blueDarkCornflower} />
       </PulseLoaderContainer>

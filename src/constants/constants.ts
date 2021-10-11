@@ -16,6 +16,9 @@ export const STR_FALSE = "False";
 export const QUESTIONS_FROM_API_AMOUNT = 20;
 export const QUIZ_QUESTIONS_TOTAL_NUM = 5;
 
+export const PATH_HOME = "/";
 export const PATH_QUIZ = "/quiz";
 
 export const NEXT_QUESTION_SET_TIMEOUT_DELAY = 3000;
+
+export const MISSING_QUESTION_FALLBACK_MESSAGE = "Apologies, there seem to be no questions in this category...";
