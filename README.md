@@ -2,18 +2,17 @@
 
 This app allows users to do quizes pulled from a [Open Trivia Database API](https://opentdb.com/) 
 
-##Screenshots
-####Quiz Categories (desktop)
+## Screenshots
+#### Quiz Categories (desktop)
 ![](src/assets/readmeImages/qm-desktop-questions-categories.png)
-####Menu difficulty levels (mobile)
+### Menu difficulty levels (mobile)
 ![](src/assets/readmeImages/qm-mobile-menu.png)
-####Quiz question view (desktop)
+#### Quiz question view (desktop)
 ![](src/assets/readmeImages/qm-desktop-question.png)
-
-####Quiz question view (mobile)
+#### Quiz question view (mobile)
 ![](src/assets/readmeImages/qm-mobile-question.png)
 
-##Tooling: 
+## Tooling: 
 * React
 * TypeScript
 * React Router
