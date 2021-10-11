@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+# Quiz Mania - React TS Web App
+
+This app allows users to do quizes pulled from a [Open Trivia Database API](https://opentdb.com/) 
+
+##Screenshots
+####Quiz Categories (desktop)
+![](src/assets/readmeImages/qm-desktop-questions-categories.png)
+####Menu difficulty levels (mobile)
+![](src/assets/readmeImages/qm-mobile-menu.png)
+####Quiz question view (desktop)
+![](src/assets/readmeImages/qm-desktop-question.png)
+
+####Quiz question view (mobile)
+![](src/assets/readmeImages/qm-mobile-question.png)
+
+##Tooling: 
+* React
+* TypeScript
+* React Router
+* Redux
+* ReduxToolkit (with default middleware)
+* Axios (for demonstration purposes mainly, [ReduxToolkit](https://redux-toolkit.js.org/rtk-query/api/createApi) offers an even more convenient solution for data fetching along with its default middleware and hooks)
+* Styled-components
+* Prettier
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
-
+### `yarn` 
+To install project dependencies
 ### `yarn start`
-
-Runs the app in the development mode.\
+To run the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
