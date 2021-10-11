@@ -1,51 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import { PATH_QUIZ } from "../../../constants/constants";
 import { resetSelectedCategory, setSelectedCategory } from "../../../redux/selectedCategorySlice";
 import { RootState, useAppDispatch } from "../../../redux/store";
 import { QuizCategory } from "../../../types/global";
 import { Categories } from "../../organisms/Categories/Categories";
-import { colours } from "../../../styles/colours";
-import { breakpoints } from "../../../styles/breakpoints";
-
-const HomeBottomContainer = styled.div`
-  margin: 34px 0;
-  display: flex;
-  justify-content: center;
-
-  @media screen and (min-width: ${breakpoints.tablet}) {
-    margin-top: 144px;
-    justify-content: right;
-    padding-right: 5vw;
-  }
-`;
-
-const StartButton = styled.button`
-  width: 55%;
-  height: 55px;
-  background-color: transparent;
-  border: 1px solid ${colours.greenDarkMoss};
-  border-radius: 5px;
-
-  @media screen and (min-width: ${breakpoints.tablet}) {
-    width: 233px;
-  }
-
-  :hover {
-    background-color: ${colours.greenDarkMoss};
-    cursor: pointer;
-  }
-
-  :disabled {
-    cursor: not-allowed;
-  }
-
-  :hover:disabled::before {
-    content: "Select category to ";
-  }
-`;
+import { HomeBottomContainer, StartButton } from "./homeStyle";
 
 export type OnSelect = (selectedCategory: QuizCategory) => void;
 

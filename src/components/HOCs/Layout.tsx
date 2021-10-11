@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ModalProvider } from "styled-react-modal";
-import { Header } from "../molecules/Header/Header";
+import { Header } from "../organisms/Header/Header";
 
 type LayoutProps = {
   children: React.ReactNode;

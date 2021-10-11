@@ -1,28 +1,11 @@
-import React, { MutableRefObject, useCallback, useEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useCallback, useEffect, useState } from "react";
 import { increaseScore } from "../../../redux/quizScoreSlice";
 import { useAppDispatch } from "../../../redux/store";
 import { colours } from "../../../styles/colours";
-import { AnswerCheckbox } from "../../molecules/AnswerCheckbox/AnswerCheckbox";
+import { AnswerButton } from "../../atoms/AnswerButton/AnswerButton";
 import { STR_TRUE, STR_FALSE } from "../../../constants/constants";
-import { HandleAnswerClick } from "../../molecules/AnswerCheckbox/types";
-
-const AnswersContainer = styled.div`
-  margin-top: 1.6rem;
-  height: 100px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const CheckboxesContainer = styled.div`
-  width: 50%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { HandleAnswerClick } from "../../atoms/AnswerButton/types";
+import { AnswersContainer, CheckboxesContainer } from "./answersStyle";
 
 type AnswersProps = {
   correctAnswer: string;
@@ -53,16 +36,15 @@ export const Answers = ({ correctAnswer, handleAnswerClick, isNewQuestion }: Ans
     }
   }, [isAnswerChecked, correctAnswer]);
 
-  // TODO: rename all checkbox-related functions and variables -> buttons
-  const handleChecked = useCallback(
-    (checkboxVal) => {
+  const handleOnClick = useCallback(
+    (answerValue) => {
       setIsAnswerChecked(true);
 
-      if (checkboxVal === correctAnswer) {
+      if (answerValue === correctAnswer) {
         dispatch(increaseScore());
       }
 
-      handleAnswerClick(checkboxVal);
+      handleAnswerClick(answerValue);
     },
     [correctAnswer]
   );
@@ -71,8 +53,8 @@ export const Answers = ({ correctAnswer, handleAnswerClick, isNewQuestion }: Ans
   return (
     <AnswersContainer>
       <CheckboxesContainer>
-        <AnswerCheckbox answerValue={STR_TRUE} {...{ handleChecked }} color={colorForTrueBtn} />
-        <AnswerCheckbox answerValue={STR_FALSE} {...{ handleChecked }} color={colorForFalseBtn} />
+        <AnswerButton answerValue={STR_TRUE} {...{ handleOnClick }} color={colorForTrueBtn} />
+        <AnswerButton answerValue={STR_FALSE} {...{ handleOnClick }} color={colorForFalseBtn} />
       </CheckboxesContainer>
     </AnswersContainer>
   );
